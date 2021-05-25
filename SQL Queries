@@ -40,3 +40,23 @@ WHERE country_name = 'World'
 AND (year = 2016 OR year = 1990);
 
 
+/* If you compare the amount of forest area lost between 1990 and 2016, to which country's total area in 2016 is it closest to? */
+
+WITH difference as 
+ (SELECT  
+   current.forest_area_sqkm - prev.forest_area_sqkm
+  AS difference_num
+  FROM forest_area AS current
+  JOIN forest_area AS prev
+  ON  (current.year = '2016' AND prev.year = '1990'
+  AND current.country_name = 'World' AND prev.country_name = 'World') )
+SELECT 
+fa.country_name,
+fa.forest_area_sqkm,
+ABS(difference.difference_num)
+FROM forest_area as fa, difference
+WHERE year = 2016
+AND ABS(difference.difference_num) >= fa.forest_area_sqkm
+ORDER BY fa.forest_area_sqkm desc
+LIMIT 1
+
