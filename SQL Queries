@@ -1,1 +1,15 @@
+/* Create a View called “forestation” by joining all three tables - forest_area, land_area and regions in the workspace. */
 
+DROP VIEW IF EXISTS forestation;
+CREATE VIEW forestation AS
+ SELECT
+  fa.country_code AS code,
+  fa.country_name AS country,
+  fa.year AS "year",
+  fa.forest_area_sqkm AS forest_area_sqkm,
+  la.total_area_sq_mi AS total_area_sq_mi,
+  r.region AS region,
+  r.income_group AS income_group,
+  100.0*(fa.forest_area_sqkm / (la.total_area_sq_mi * 2.59)) AS percentage
+ FROM forest_area fa, land_area la, regions r
+ WHERE (fa.country_code = la.country_code AND fa.year = la.year AND r.country_code = la.country_code);
