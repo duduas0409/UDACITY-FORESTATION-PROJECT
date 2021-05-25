@@ -13,3 +13,30 @@ CREATE VIEW forestation AS
   100.0*(fa.forest_area_sqkm / (la.total_area_sq_mi * 2.59)) AS percentage
  FROM forest_area fa, land_area la, regions r
  WHERE (fa.country_code = la.country_code AND fa.year = la.year AND r.country_code = la.country_code);
+ 
+ 
+ 
+ /*  What was the total forest area (in sq km) of the world in 1990? */
+ 
+SELECT *
+FROM forest_area
+WHERE country_name = 'World'
+AND year = 1990 
+
+
+/*  What was the total forest area (in sq km) of the world in 2016 */
+
+SELECT *
+FROM forest_area
+WHERE country_name = 'World'
+AND year = 1990 
+
+
+/* 1st and 2nd question in the same query */
+
+SELECT *
+FROM forest_area
+WHERE country_name = 'World'
+AND (year = 2016 OR year = 1990);
+
+
